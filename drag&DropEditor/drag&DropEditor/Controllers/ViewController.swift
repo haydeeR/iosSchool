@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import MobileCoreServices
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDragDelegate, UIDropInteractionDelegate {
+    
     @IBOutlet weak var editorImage: UIImageView!
     @IBOutlet weak var colorCollectionView: UICollectionView!
     
@@ -25,6 +27,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewDidLoad()
     
         setupColors()
+        editorImage.isUserInteractionEnabled = true
+        let dropInteraction = UIDropInteraction(delegate: self)
+        editorImage.addInteraction(dropInteraction)
         renderEditor()
     }
     
@@ -84,7 +89,39 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             self.bottomText.draw(in: bottomRect, withAttributes: bottomAttributes)
         })
         
+    }
+    
+    //MARK: UICollectionDragDelegate
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         
+        let color = colors[indexPath.row]
+        let itemProvider = NSItemProvider(object: color)
+        let item = UIDragItem(itemProvider: itemProvider)
+        return [item]
+    }
+    
+    //MARK: UIDropInteractionDelegate
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        return UIDropProposal(operation: .copy)
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        let dropLocation = session.location(in: editorImage)
+        
+        if session.hasItemsConforming(toTypeIdentifiers: [kUTTypePlainText as String]) {
+            print("Hemos soltado una fuente")
+        } else {
+            print("Hemos soltado un color")
+            session.loadObjects(ofClass: UIColor.self) { (items) in
+                guard let color = items.first as? UIColor else {return}
+                if dropLocation.y > self.editorImage.bounds.midY {
+                    self.bottomFontColor = color
+                } else {
+                    self.topFontColor = color
+                }
+            }
+        }
+        self.renderEditor()
     }
 }
 

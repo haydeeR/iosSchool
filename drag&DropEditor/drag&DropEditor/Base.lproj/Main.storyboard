@@ -43,6 +43,8 @@
                                 <connections>
                                     <outlet property="dataSource" destination="nys-J9-avO" id="Ab4-gr-Yc4"/>
                                     <outlet property="delegate" destination="nys-J9-avO" id="D8f-Wv-48C"/>
+                                    <outlet property="dragDelegate" destination="nys-J9-avO" id="rv5-ux-CBl"/>
+                                    <outlet property="dropDelegate" destination="nys-J9-avO" id="XlM-RJ-y2j"/>
                                 </connections>
                             </collectionView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="document-27091_640" translatesAutoresizingMaskIntoConstraints="NO" id="BwK-jd-dDI">
