@@ -112,11 +112,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             print("Hemos soltado una fuente")
             session.loadObjects(ofClass: NSString.self) { (items) in
                 guard let fontName = items.first as? String else {return}
-                if dropLocation.y > self.editorImage.bounds.midY {
+                if dropLocation.y < self.editorImage.bounds.midY {
                     self.topFontName = fontName
                 }else {
                     self.bottomFontName = fontName
                 }
+                self.renderEditor()
             }
         } else {
             print("Hemos soltado un color")
@@ -127,9 +128,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 } else {
                     self.topFontColor = color
                 }
+                self.renderEditor()
             }
         }
-        self.renderEditor()
     }
 }
 
