@@ -119,6 +119,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 }
                 self.renderEditor()
             }
+        } else if session.hasItemsConforming(toTypeIdentifiers: [kUTTypeImage as String]){
+            print("Hemos soltado una imagen")
+            session.loadObjects(ofClass: UIImage.self) { (items) in
+                guard let image = items.first as? UIImage else {return}
+                self.image = image
+                self.renderEditor()
+            }
         } else {
             print("Hemos soltado un color")
             session.loadObjects(ofClass: UIColor.self) { (items) in
@@ -132,5 +139,32 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             }
         }
     }
+    
+    // MARK: UITapGesture
+    
+    @IBAction func changeText(_ sender: UITapGestureRecognizer) {
+        
+        let tapLocation = sender.location(in: self.editorImage)
+        let changeTop = (tapLocation.y < self.editorImage.bounds.midY) ? true : false
+        let alertController = UIAlertController(title: "Cambia el texto", message: "", preferredStyle: .alert)
+        alertController.addTextField { textField in
+            textField.placeholder = "Escribe aquí el texto a cambiar"
+            textField.text = changeTop ? self.topText : self.bottomText
+        }
+        let changeTextAction = UIAlertAction(title: "Cambiar texto", style: .default) { _ in
+            guard let newText = alertController.textFields?[0].text else { return }
+            if changeTop {
+                self.topText = newText
+            } else {
+                self.bottomText = newText
+            }
+            self.renderEditor()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(changeTextAction)
+        alertController.addAction(cancelAction)
+        present(alertController,animated: true)
+    }
+    
 }
 
