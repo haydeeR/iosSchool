@@ -83,8 +83,10 @@ class FontTableViewController: UITableViewController, UITableViewDragDelegate {
         // Pass the selected object to the new view controller.
     }
     */
-
-    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+    
+    
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem]
+    {
         let fontName = fonts[indexPath.row]
         guard let data = fontName.data(using: .utf8) else {return []}
         let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: kUTTypePlainText as String)

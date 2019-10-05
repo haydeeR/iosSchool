@@ -15,12 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-       
+        ///Controla la navigation bar de cuando inicia la app para que oculte y muestre sin importar si esta en portrait o landscape
+        
         if let splitView = window?.rootViewController as? UISplitViewController {
             splitView.preferredDisplayMode = .allVisible
-            
-            if let navBar = splitView.viewControllers.last as? UINavigationController {
-                navBar.topViewController?.navigationItem.leftBarButtonItem = splitView.displayModeButtonItem
+            if let navbar = splitView.viewControllers.last as? UINavigationController{
+                navbar.topViewController?.navigationItem.leftBarButtonItem = splitView.displayModeButtonItem
             }
         }
         

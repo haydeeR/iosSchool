@@ -30,8 +30,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         editorImage.isUserInteractionEnabled = true
         let dropInteraction = UIDropInteraction(delegate: self)
         editorImage.addInteraction(dropInteraction)
+        
         let dragInteraction = UIDragInteraction(delegate: self)
-        editorImage.addInteraction(dragInteraction)
+            editorImage.addInteraction(dragInteraction)
+        
+      
         renderEditor()
     }
     
@@ -102,15 +105,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return [item]
     }
     
-    //MARK: UIDragInteractionDelegate
-    func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
-        guard let image = editorImage.image else { return [] }
-        let provider = NSItemProvider(object: image)
-        let item = UIDragItem(itemProvider: provider)
-        return [item]
-    }
-    
-    
     //MARK: UIDropInteractionDelegate
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         return UIDropProposal(operation: .copy)
@@ -130,14 +124,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 }
                 self.renderEditor()
             }
-        } else if session.hasItemsConforming(toTypeIdentifiers: [kUTTypeImage as String]){
-            print("Hemos soltado una imagen")
+        } else  if session.hasItemsConforming(toTypeIdentifiers: [kUTTypeImage as String]){
+            print("Ha soldato una imagen")
             session.loadObjects(ofClass: UIImage.self) { (items) in
                 guard let image = items.first as? UIImage else {return}
-                self.image = self.resizeImage(image: image, targetSize: CGSize(width: 300, height: 300))
+                self.image = image
                 self.renderEditor()
             }
-        } else {
+        }
+        else{
             print("Hemos soltado un color")
             session.loadObjects(ofClass: UIColor.self) { (items) in
                 guard let color = items.first as? UIColor else {return}
@@ -151,51 +146,70 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
-    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
-        let originalSize = image.size
-        
-        let widthRatio = targetSize.width / originalSize.width // x 2.3
-        let heightRatio = targetSize.height / originalSize.height // x1.8
-        
-        let targetRatio = max(widthRatio, heightRatio)
-        
-        let newSize = CGSize(width: originalSize.width * targetRatio,
-                             height: originalSize.height * targetRatio)
-        
-        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-        
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.draw(in: rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage!
-        
-    }
-    // MARK: UITapGesture
-    
+    //MARK : UITApGestureRecognizer
     @IBAction func changeText(_ sender: UITapGestureRecognizer) {
+        let tapLocation = sender.location(in: editorImage)
+        let changeTop = (tapLocation.y < editorImage.bounds.midY) ? true : false
+        //layer es relativo
+        //bounds es absoluto
         
-        let tapLocation = sender.location(in: self.editorImage)
-        let changeTop = (tapLocation.y < self.editorImage.bounds.midY) ? true : false
-        let alertController = UIAlertController(title: "Cambia el texto", message: "", preferredStyle: .alert)
-        alertController.addTextField { textField in
-            textField.placeholder = "Escribe aquí el texto a cambiar"
+        let alertController = UIAlertController(title: "Hey!", message: "Escribe el nuevo texto", preferredStyle: .alert)
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Aqui ,va el nuevo texto"
             textField.text = changeTop ? self.topText : self.bottomText
+            let changeAction = UIAlertAction(title: "Guardar", style: .default, handler: { _ in
+              
+                    guard let newText = alertController.textFields?[0].text else {return}
+                    if changeTop {
+                        self.topText = newText
+                    }
+                    else {
+                        self.bottomText = newText
+                    }
+                    self.renderEditor()
+            })
+            
+            let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+            
+            
+            alertController.addAction(changeAction)
+            alertController.addAction(cancelAction)
+            
         }
-        let changeTextAction = UIAlertAction(title: "Cambiar texto", style: .default) { _ in
-            guard let newText = alertController.textFields?[0].text else { return }
-            if changeTop {
-                self.topText = newText
-            } else {
-                self.bottomText = newText
+        
+        present(alertController, animated: true)
+    }
+    
+    
+    // MARK: UIdragInteractiondelegate
+    func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
+        guard let image = editorImage.image else {return[]}
+        let provider = NSItemProvider(object: image)
+        let dragItem = UIDragItem(itemProvider: provider)
+        return [dragItem]
+    }
+    
+    @IBAction func refresh(_ sender: UISwipeGestureRecognizer)
+    {
+       
+            switch sender.direction {
+            case UISwipeGestureRecognizer.Direction.up:
+                topFontColor = UIColor.white
+                bottomFontColor = UIColor.white
+                topText = "Welcome to iOS School"
+                bottomText = "Welcome to the magic! "
+                topFontName = "Avenir Next"
+                bottomFontName = "Baskerville"
+
+                image = UIGraphicsGetImageFromCurrentImageContext()
+                
+                self.renderEditor()
+            
+                
+            default:
+                break
             }
-            self.renderEditor()
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alertController.addAction(changeTextAction)
-        alertController.addAction(cancelAction)
-        present(alertController,animated: true)
+        
     }
     
 }
