@@ -15,7 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+       
+        if let splitView = window?.rootViewController as? UISplitViewController {
+            splitView.preferredDisplayMode = .allVisible
+            
+            if let navBar = splitView.viewControllers.last as? UINavigationController {
+                navBar.topViewController?.navigationItem.leftBarButtonItem = splitView.displayModeButtonItem
+            }
+        }
+        
         return true
     }
 
