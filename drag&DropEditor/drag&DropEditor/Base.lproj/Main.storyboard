@@ -55,7 +55,8 @@
                                     <constraint firstAttribute="width" secondItem="BwK-jd-dDI" secondAttribute="height" multiplier="1:0.8" id="cUl-eY-VBw"/>
                                 </constraints>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="8xN-FD-IL0" appends="YES" id="8Ha-n9-H4x"/>
+                                    <outletCollection property="gestureRecognizers" destination="tHT-6Y-CGe" appends="YES" id="0wH-ZF-9Ec"/>
+                                    <outletCollection property="gestureRecognizers" destination="WTB-W3-cmg" appends="YES" id="6Fd-ZQ-HAa"/>
                                 </connections>
                             </imageView>
                         </subviews>
@@ -80,15 +81,20 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JmR-7i-oPJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="8xN-FD-IL0">
+                <tapGestureRecognizer id="tHT-6Y-CGe">
                     <connections>
-                        <action selector="changeText:" destination="nys-J9-avO" id="Uhj-c7-TD6"/>
+                        <action selector="changeText:" destination="nys-J9-avO" id="Lb3-KA-hDJ"/>
                     </connections>
                 </tapGestureRecognizer>
+                <swipeGestureRecognizer direction="up" id="WTB-W3-cmg">
+                    <connections>
+                        <action selector="refresh:" destination="nys-J9-avO" id="0NM-Jb-KuC"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="784.05797101449286" y="-104.46428571428571"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Fuentes-->
         <scene sceneID="saq-0Q-91j">
             <objects>
                 <tableViewController clearsSelectionOnViewWillAppear="NO" id="NTX-eM-Rg9" customClass="FontTableViewController" customModule="drag_DropEditor" customModuleProvider="target" sceneMemberID="viewController">
@@ -121,7 +127,7 @@
                             <outlet property="delegate" destination="NTX-eM-Rg9" id="mTU-oZ-2zI"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="At3-GL-YgD"/>
+                    <navigationItem key="navigationItem" title="Fuentes" id="At3-GL-YgD"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oQL-Py-j24" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
