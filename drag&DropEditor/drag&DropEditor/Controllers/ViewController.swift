@@ -9,7 +9,7 @@
 import UIKit
 import MobileCoreServices
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDragDelegate, UIDropInteractionDelegate {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDragDelegate, UIDropInteractionDelegate, UIDragInteractionDelegate {
     
     @IBOutlet weak var editorImage: UIImageView!
     @IBOutlet weak var colorCollectionView: UICollectionView!
@@ -30,6 +30,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         editorImage.isUserInteractionEnabled = true
         let dropInteraction = UIDropInteraction(delegate: self)
         editorImage.addInteraction(dropInteraction)
+        let dragInteraction = UIDragInteraction(delegate: self)
+        editorImage.addInteraction(dragInteraction)
         renderEditor()
     }
     
@@ -99,6 +101,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let item = UIDragItem(itemProvider: itemProvider)
         return [item]
     }
+    
+    //MARK: UIDragInteractionDelegate
+    func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
+        guard let image = editorImage.image else { return [] }
+        let provider = NSItemProvider(object: image)
+        let item = UIDragItem(itemProvider: provider)
+        return [item]
+    }
+    
     
     //MARK: UIDropInteractionDelegate
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
