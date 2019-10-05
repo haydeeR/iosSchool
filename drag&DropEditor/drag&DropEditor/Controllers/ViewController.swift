@@ -134,7 +134,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             print("Hemos soltado una imagen")
             session.loadObjects(ofClass: UIImage.self) { (items) in
                 guard let image = items.first as? UIImage else {return}
-                self.image = image
+                self.image = self.resizeImage(image: image, targetSize: CGSize(width: 300, height: 300))
                 self.renderEditor()
             }
         } else {
@@ -151,6 +151,27 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let originalSize = image.size
+        
+        let widthRatio = targetSize.width / originalSize.width // x 2.3
+        let heightRatio = targetSize.height / originalSize.height // x1.8
+        
+        let targetRatio = max(widthRatio, heightRatio)
+        
+        let newSize = CGSize(width: originalSize.width * targetRatio,
+                             height: originalSize.height * targetRatio)
+        
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+        
+    }
     // MARK: UITapGesture
     
     @IBAction func changeText(_ sender: UITapGestureRecognizer) {
