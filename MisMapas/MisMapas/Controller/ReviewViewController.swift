@@ -2,8 +2,7 @@
 //  ReviewViewController.swift
 //  MisRecetas
 //
-//  Created by Juan Gabriel Gomila Salas on 11/7/16.
-//  Copyright © 2016 Juan Gabriel Gomila Salas. All rights reserved.
+//  Created by Haydee Rodriguezon 11/7/19.
 //
 
 import UIKit

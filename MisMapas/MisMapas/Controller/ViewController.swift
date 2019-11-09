@@ -3,7 +3,6 @@
 //  MisRecetas
 //
 //  Created by Haydee Rodriguez on 31/8/19.
-//  Copyright © 2016 Juan Gabriel Gomila Salas. All rights reserved...
 //
 
 import UIKit
@@ -16,6 +15,16 @@ class ViewController: UITableViewController { /*UIViewController, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        var place = Place(name: "AlexanderPlatz", type: "plaza", location: "Alexanderplatz 1 10178 Berlin Germany", image: #imageLiteral(resourceName: "cristoredentor") ,telephone: "123123123", website: "https://www.gob.mx/sectur/es/")
+        places.append(place)
+        place = Place(name: "Atomium", type: "museo", location: "Place de l'Atomium 1 1020 Brussels Belgium", image: #imageLiteral(resourceName: "atomium") ,telephone: "123123123", website: "https://www.gob.mx/sectur/es/")
+        places.append(place)
+        place = Place(name: "BigBen", type: "monumento", location: "London SW1A 0AA England", image: #imageLiteral(resourceName: "bigben"), telephone: "123123123", website: "https://www.gob.mx/sectur/es/")
+        places.append(place)
+        place = Place(name: "CristoRedentor", type: "monumento", location: "Parque Nacional da Tijuca Escadaria do Corcovado Humaitá Rio de Janeiro - RJ 21072 Brasil", image: #imageLiteral(resourceName: "cristoredentor"),telephone: "123123123", website: "https://www.gob.mx/sectur/es/" )
+        places.append(place)
+
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

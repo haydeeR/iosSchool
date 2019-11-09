@@ -15,12 +15,15 @@ class Place {
     var location = ""
     var image: UIImage!
     var rating = ""
+    var telephone = ""
+    var website = ""
     
-    init (name: String, type:String, location:String, image:UIImage, rating: String){
+    init (name: String, type: String, location: String, image: UIImage, telephone: String, website: String){
         self.name = name
         self.type = type
         self.location = location
         self.image = image
-        self.rating = rating
+        self.telephone = telephone
+        self.website = website
     }
 }

@@ -1,9 +1,7 @@
 //
 //  DetailViewController.swift
-//  MisRecetas
+//  Mis Lugares
 //
-//  Created by Juan Gabriel Gomila Salas on 8/7/16.
-//  Copyright © 2016 Juan Gabriel Gomila Salas. All rights reserved.
 //
 
 import UIKit
@@ -75,56 +73,33 @@ extension DetailViewController : UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        switch section {
-        case 0:
-            return 2
-        case 1:
-            return 22
-        case 2:
-            return 23
-        default:
-            return 0
-        }
-    
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DetailViewCell", for: indexPath) as! PlaceDetailViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DetailCell", for: indexPath) as! PlaceDetailViewCell
         
         cell.backgroundColor = UIColor.clear
         
-        switch indexPath.section {
-        case 0:
-            switch indexPath.row {
+        switch indexPath.row {
             case 0:
                 cell.keyLabel.text = "Nombre:"
                 cell.valueLabel.text = self.place.name
             case 1:
-                cell.keyLabel.text = "Tiempo:"
-                cell.valueLabel.text = ""
+                cell.keyLabel.text = "Tipo:"
+                cell.valueLabel.text = self.place.type
+            case 2:
+                cell.keyLabel.text = "Localizacion:"
+                cell.valueLabel.text = self.place.location
+            case 3:
+                cell.keyLabel.text = "Telefono:"
+                cell.valueLabel.text = self.place.telephone
+            case 4:
+                cell.keyLabel.text = "WebSite:"
+                cell.valueLabel.text = self.place.website
             default:
-                break
-            }
-            
-        case 1:
-            if indexPath.row == 0 {
-                cell.keyLabel.text = "Ingredientes:"
-            } else {
-                cell.keyLabel.text = ""
-            }
-            cell.valueLabel.text = ""
-        case 2:
-            if indexPath.row == 0 {
-                cell.keyLabel.text = "Pasos:"
-            } else {
-                cell.keyLabel.text = ""
-            }
-            cell.valueLabel.text = ""
-        default:
             break
         }
-        
         
         return cell
         
