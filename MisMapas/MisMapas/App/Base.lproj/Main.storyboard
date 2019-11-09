@@ -91,6 +91,35 @@
             </objects>
             <point key="canvasLocation" x="944.79999999999995" y="-218.1409295352324"/>
         </scene>
+        <!--Map View Controller-->
+        <scene sceneID="dtf-4C-vLy">
+            <objects>
+                <viewController id="qp8-Y5-4un" customClass="MapViewController" customModule="MisMapas" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fbm-za-wgi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="GEI-eL-VjJ">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="GEI-eL-VjJ" firstAttribute="leading" secondItem="ZuN-pZ-3nK" secondAttribute="leading" id="AjK-h4-uG3"/>
+                            <constraint firstItem="ZuN-pZ-3nK" firstAttribute="bottom" secondItem="GEI-eL-VjJ" secondAttribute="bottom" id="KKG-Zw-qqD"/>
+                            <constraint firstItem="ZuN-pZ-3nK" firstAttribute="trailing" secondItem="GEI-eL-VjJ" secondAttribute="trailing" id="RlM-Wf-mGK"/>
+                            <constraint firstItem="GEI-eL-VjJ" firstAttribute="top" secondItem="ZuN-pZ-3nK" secondAttribute="top" id="tTn-Ny-7co"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ZuN-pZ-3nK"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="GEI-eL-VjJ" id="LeG-7W-mMX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cwi-tZ-CAT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2470" y="564"/>
+        </scene>
         <!--Detail View Controller-->
         <scene sceneID="89n-Nz-RUL">
             <objects>
@@ -196,6 +225,7 @@
                         <outlet property="placeImageView" destination="EPR-Qj-cm8" id="7SX-VY-ws9"/>
                         <outlet property="ratingButton" destination="oBr-np-kc2" id="AgE-c8-vhF"/>
                         <outlet property="tableView" destination="sw5-HB-v4y" id="KBe-Ax-o0y"/>
+                        <segue destination="qp8-Y5-4un" kind="show" identifier="showMap" id="pu1-Lp-qBB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YZF-0a-F3B" userLabel="First Responder" sceneMemberID="firstResponder"/>

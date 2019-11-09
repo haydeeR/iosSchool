@@ -30,7 +30,7 @@ class DetailViewController: UIViewController {
         self.tableView.estimatedRowHeight = 44.0
         self.tableView.rowHeight = UITableView.automaticDimension
         
-        let image = UIImage(named: self.place.rating)
+        let image = UIImage(named: self.place.rating) ?? #imageLiteral(resourceName: "rating")
         self.ratingButton.setImage(image, for: .normal)
 
         
@@ -62,13 +62,19 @@ class DetailViewController: UIViewController {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showMap" {
+            let destinationController = segue.destination as! MapViewController
+            destinationController.place = self.place
+        }
+    }
 }
 
 
 
 extension DetailViewController : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 1
     }
     
     
@@ -112,4 +118,12 @@ extension DetailViewController : UITableViewDataSource {
 
 extension DetailViewController : UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 2:
+            self.performSegue(withIdentifier: "showMap", sender: nil)
+        default:
+            break
+        }
+    }
 }

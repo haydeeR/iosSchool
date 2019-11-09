@@ -13,7 +13,7 @@ class Place {
     var name = ""
     var type = ""
     var location = ""
-    var image: UIImage!
+    var image: UIImage! = #imageLiteral(resourceName: "rating")
     var rating = ""
     var telephone = ""
     var website = ""
